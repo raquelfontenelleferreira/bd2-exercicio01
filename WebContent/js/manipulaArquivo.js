@@ -1,3 +1,25 @@
+function Conta (id, nome, saldo, data) {
+	this.id = id
+	this.nome = nome
+	this.saldo = Number(saldo)
+	this.data = data
+}
+
+function CSVParaObjeto (csv) {
+	let array = csv.split('\n')
+	let rows = []
+
+	for (let i = 0; i < array.length; i++) {
+		var valores = array[1].split(';')
+
+		if (valores.length < 5) {
+			rows.push(new Conta(valores[0], valores[1], valores[2], valores[3]))
+		}
+		return rows
+	}
+
+}
+
 var leitorDeCSV = new FileReader();
 var leitorDeCSV2 = new FileReader();
 
@@ -21,6 +43,11 @@ function pegaCSV2(inputFile) {
 }
 
 function leCSV(evt) {
+	let contas = CSVParaObjeto(evt.target.result)
+
+	for (var i in contas) {
+		totalArquivoTipo1 += contas[i].saldo
+	}
 
 	var fileArr = evt.target.result.split('\n');
 	var strDiv = '<table>';
@@ -46,6 +73,11 @@ function leCSV(evt) {
 }
 
 function leCSV2(evt) {
+	let contas = CSVParaObjeto(evt.target.result)
+
+	for (var i in contas) {
+		totalArquivoTipo2 += contas[i].saldo
+	}
 
 	var fileArr = evt.target.result.split('\n');
 	var strDiv = '<table>';
